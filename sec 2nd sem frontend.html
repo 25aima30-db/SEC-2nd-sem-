@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIML Portfolio SEC | Krithee Venkatesan</title>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: white; line-height: 1.5; margin: 0; }
+        nav { position: fixed; width: 100%; background: rgba(30, 41, 59, 0.9); backdrop-filter: blur(10px); padding: 1rem; text-align: center; z-index: 1000; }
+        section { padding: 120px 20px; max-width: 800px; margin: auto; border-bottom: 1px solid #1e293b; }
+        .btn { background: #3b82f6; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.3s; }
+        .btn:hover { background: #2563eb; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #1e293b; color: white; border: 1px solid #334155; border-radius: 5px; box-sizing: border-box; }
+        #responseMsg { margin-top: 15px; color: #4ade80; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="#home" style="color:white; margin:15px; text-decoration: none;">Home</a>
+    <a href="#about" style="color:white; margin:15px; text-decoration: none;">About</a>
+    <a href="#contact" style="color:white; margin:15px; text-decoration: none;">Contact</a>
+</nav>
+
+<section id="home">
+    <h1>Hello, I am Krithee Venkatesan</h1>
+    <p>1st Year BSc AIML student at Kristu Jayanti Deemed to be University.</p>
+    <p>Exploring the future of AIML and discovering new things like Node.js, GitHub, and Full-Stack Web Development.</p>
+</section>
+
+<section id="about">
+    <h2>About My Work</h2>
+    <p>This project demonstrates a modern web development workflow involving a frontend UI, a Node.js backend, and a MongoDB cloud database.</p>
+</section>
+
+<section id="contact">
+    <h2>Get in Touch</h2>
+    <p>Fill this out to test my Database connection!</p>
+    <form id="contactForm">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <textarea id="message" placeholder="Your Message" rows="4"></textarea>
+        <button type="submit" class="btn">Send to MongoDB</button>
+    </form>
+    <p id="responseMsg"></p>
+</section>
+
+<script>
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const responseMsg = document.getElementById('responseMsg');
+        responseMsg.innerText = "Sending...";
+
+        const data = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            message: document.getElementById('message').value
+        };
+
+        // RENDER DEPLOYMENT INSTRUCTION:
+        // Replace 'http://localhost:3000' with your actual Render URL after deployment
+        const API_URL = 'https://sec-2nd-sem.onrender.com'; 
+
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+
+            if(response.ok) {
+                responseMsg.innerText = "✅ Data stored in MongoDB successfully!";
+                document.getElementById('contactForm').reset();
+            } else {
+                responseMsg.innerText = "❌ Server error. Please try again.";
+            }
+        } catch (error) {
+            responseMsg.innerText = "❌ Could not connect to the server.";
+            console.error(error);
+        }
+    });
+</script>
+
+</body>
+</html>
